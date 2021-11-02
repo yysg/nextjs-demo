@@ -4,9 +4,9 @@ export default function Home({ goods, goodsFromServer }) {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1>SSG PAGE</h1>
+        <h1>SSR PAGE</h1>
         <div className={styles.grid}>
-          {goods && goods.map(good => {
+          {goodsFromServer && goodsFromServer.map(good => {
             return (<div key={good.id} className={styles.card}>
               <h2>{good.name}</h2>
               <p>{good.price}元/KG</p>
@@ -17,7 +17,8 @@ export default function Home({ goods, goodsFromServer }) {
     </div>
   )
 }
-export async function getStaticProps(context) {
+
+export async function getServerSideProps(context) {
   const res = await fetch(`https://7b7c0854-0c55-40e9-8ad4-19ecd18fef77.mock.pstmn.io/goods`)
   const data = await res.json()
 
@@ -28,6 +29,6 @@ export async function getStaticProps(context) {
   }
 
   return {
-    props: { goods: data }, // will be passed to the page component as props
+    props: { goodsFromServer: data }, // will be passed to the page component as props
   }
 }
